@@ -5,9 +5,9 @@ services:
   # Web Server Service
   nginx:
     image: nginx:alpine
-    container_name: nginx
+    container_name: nginx_awk_booking
     ports:
-      - "8080:80"
+      - "9006:80"
     volumes:
       - ./src:/var/www
       - ./nginx/conf.d/:/etc/nginx/conf.d/
@@ -26,28 +26,28 @@ services:
   #   environment:
   #     MYSQL_DATABASE: blog
   #     MYSQL_ROOT_PASSWORD: password
-  db:
-    image: postgres
-    container_name: postgres
-    volumes:
-      - ./postgresql/data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    environment: 
-      POSTGRES_DB: blog
-      POSTGRES_USER: root 
-      POSTGRES_PASSWORD: password 
+  # db:
+  #   image: postgres
+  #   container_name: postgres
+  #   volumes:
+  #     - ./postgresql/data:/var/lib/postgresql/data
+  #   ports:
+  #     - "5432:5432"
+  #   environment: 
+  #     POSTGRES_DB: blog
+  #     POSTGRES_USER: root 
+  #     POSTGRES_PASSWORD: password 
 
   # Application Service
   app:
-    container_name: blog
+    container_name: laravel_awk_booking
     build: 
       context: ./php
       dockerfile: Dockerfile
     volumes:
       - ./src:/var/www
     ports:
-      - "9000:9000"
+      - "9005:9000"
     working_dir: /var/www
 
   #phpMyAdmin Service
@@ -58,13 +58,13 @@ services:
   #     - "3400:80"
   #   depends_on:
   #     - db
-  pgadmin:
-    image: dpage/pgadmin4
-    container_name: pgAdmin
-    ports:
-      - "5050:80"
-    depends_on:
-      - db 
-    environment:
-      PGADMIN_DEFAULT_EMAIL: hanieasemi76@gmail.com
-      PGADMIN_DEFAULT_PASSWORD: password 
+  # pgadmin:
+  #   image: dpage/pgadmin4
+  #   container_name: pgAdmin
+  #   ports:
+  #     - "5050:80"
+  #   depends_on:
+  #     - db 
+  #   environment:
+  #     PGADMIN_DEFAULT_EMAIL: hanieasemi76@gmail.com
+  #     PGADMIN_DEFAULT_PASSWORD: password 
